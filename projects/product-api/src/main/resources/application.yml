@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mariadb://localhost:3306/product_api
+    url: jdbc:mariadb://localhost:3306/product_api?createDatabaseIfNotExist=true&useSSL=false
     username: root
     password: root
   jpa:

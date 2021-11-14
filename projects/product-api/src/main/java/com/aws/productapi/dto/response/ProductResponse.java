@@ -1,50 +1,35 @@
-package com.aws.productapi.entity;
+package com.aws.productapi.dto.response;
 
-import com.aws.productapi.dto.request.ProductRequest;
+import com.aws.productapi.entity.Product;
 
-import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-@Entity
-@Table(name = "product",
-        uniqueConstraints = {
-                @UniqueConstraint(columnNames = {"code"})
-        }
-)
-public class Product {
+public class ProductResponse {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @NotNull
     private Long id;
 
-    @Column(length = 32, nullable = false)
+    @NotNull
+    @Size(min = 3, max = 32)
     private String name;
 
-    @Column(length = 24, nullable = false)
+    @Size(min = 3, max = 24)
     private String model;
 
-    @Column(length = 8, nullable = false)
+    @Size(min = 3, max = 8)
     private String code;
 
     private BigDecimal price;
 
-    public Product() {
-    }
-
-    public Product(ProductRequest request) {
-        this.name = request.getName();
-        this.model = request.getModel();
-        this.code = request.getCode();
-        this.price = request.getPrice();
-    }
-
-    public Product(Long id, ProductRequest request) {
-        this.id = id;
-        this.name = request.getName();
-        this.model = request.getModel();
-        this.code = request.getCode();
-        this.price = request.getPrice();
+    public ProductResponse(Product product) {
+        this.id = product.getId();
+        this.name = product.getName();
+        this.model = product.getModel();
+        this.code = product.getCode();
+        this.price = product.getPrice();
     }
 
     public Long getId() {
@@ -91,12 +76,12 @@ public class Product {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Product product = (Product) o;
-        return id.equals(product.id);
+        ProductResponse that = (ProductResponse) o;
+        return Objects.equals(name, that.name) && Objects.equals(model, that.model) && Objects.equals(code, that.code) && Objects.equals(price, that.price);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(name, model, code, price);
     }
 }
