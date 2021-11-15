@@ -42,7 +42,7 @@ public class ProductPublisher {
             PublishResult publishResult = snsClient
                     .publish(productEventsTopic.getTopicArn(), objectMapper.writeValueAsString(eventData));
 
-            LOG.info("Product event received - Event: {} - ProductId: {} - MessageId: {}",
+            LOG.info("Product event publish - Event: {} - ProductId: {} - MessageId: {}",
                     eventData.getEventType(),
                     productEvent.getProductId(),
                     publishResult.getMessageId());
