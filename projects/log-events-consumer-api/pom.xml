@@ -19,6 +19,9 @@
     <properties>
         <java.version>17</java.version>
         <jib.version>3.1.4</jib.version>
+        <sqs.version>1.12.110</sqs.version>
+        <spring-jms.version>5.3.13</spring-jms.version>
+        <amazon-sqs-java-messaging-lib.version>1.0.8</amazon-sqs-java-messaging-lib.version>
     </properties>
 
     <dependencies>
@@ -30,6 +33,24 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jms</artifactId>
+            <version>${spring-jms.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>amazon-sqs-java-messaging-lib</artifactId>
+            <version>${amazon-sqs-java-messaging-lib.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-sqs</artifactId>
+            <version>${sqs.version}</version>
         </dependency>
 
         <dependency>
