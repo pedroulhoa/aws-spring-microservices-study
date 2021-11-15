@@ -33,8 +33,8 @@ public class ServiceProductMsStack extends Stack {
                 .create(this, "ALB01")
                 .serviceName("service-product-ms")
                 .cluster(cluster)
-                .cpu(512)
-                .memoryLimitMiB(1024)
+                .cpu(256)
+                .memoryLimitMiB(512)
                 .desiredCount(2)
                 .listenerPort(8080)
                 .taskImageOptions(

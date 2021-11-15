@@ -48,14 +48,14 @@ public class ServiceLogEventsProductStack extends Stack {
                 .create(this, "ALB02")
                 .serviceName("service-log-events-product")
                 .cluster(cluster)
-                .cpu(512)
-                .memoryLimitMiB(1024)
+                .cpu(256)
+                .memoryLimitMiB(512)
                 .desiredCount(2)
                 .listenerPort(9090)
                 .taskImageOptions(
                         ApplicationLoadBalancedTaskImageOptions.builder()
                                 .containerName("log-events-product")
-                                .image(ContainerImage.fromRegistry("pedroulhoa/log-events-product:0.0.1-SNAPSHOT"))
+                                .image(ContainerImage.fromRegistry("pedroulhoa/log-events-product:0.0.2-SNAPSHOT"))
                                 .containerPort(9090)
                                 .logDriver(LogDriver.awsLogs(AwsLogDriverProps.builder()
                                         .logGroup(LogGroup.Builder.create(this, "LogEventsProductLogGroup")
@@ -85,5 +85,7 @@ public class ServiceLogEventsProductStack extends Stack {
                 .scaleInCooldown(Duration.seconds(60))
                 .scaleOutCooldown(Duration.seconds(60))
                 .build());
+
+        productEventsQueue.grantConsumeMessages(serviceLogEventsProduct.getTaskDefinition().getTaskRole());
     }
 }
