@@ -70,6 +70,12 @@
 
         <dependency>
             <groupId>software.amazon.awscdk</groupId>
+            <artifactId>dynamodb</artifactId>
+            <version>${cdk.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>software.amazon.awscdk</groupId>
             <artifactId>assertions</artifactId>
             <version>${cdk.version}</version>
             <scope>test</scope>
