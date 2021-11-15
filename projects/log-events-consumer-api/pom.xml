@@ -12,7 +12,7 @@
 
     <groupId>com.aws</groupId>
     <artifactId>log-events-consumer-api</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.3-SNAPSHOT</version>
     <name>log-events-consumer-api</name>
     <description>log-events-consumer-api</description>
 
