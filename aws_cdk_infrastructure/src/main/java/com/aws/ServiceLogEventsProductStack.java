@@ -48,8 +48,8 @@ public class ServiceLogEventsProductStack extends Stack {
                 .create(this, "ALB02")
                 .serviceName("service-log-events-product")
                 .cluster(cluster)
-                .cpu(512)
-                .memoryLimitMiB(1024)
+                .cpu(256)
+                .memoryLimitMiB(512)
                 .desiredCount(1)
                 .listenerPort(9090)
                 .taskImageOptions(
