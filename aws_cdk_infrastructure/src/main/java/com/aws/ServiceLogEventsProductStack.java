@@ -50,7 +50,7 @@ public class ServiceLogEventsProductStack extends Stack {
                 .cluster(cluster)
                 .cpu(256)
                 .memoryLimitMiB(512)
-                .desiredCount(2)
+                .desiredCount(1)
                 .listenerPort(9090)
                 .taskImageOptions(
                         ApplicationLoadBalancedTaskImageOptions.builder()
@@ -76,8 +76,8 @@ public class ServiceLogEventsProductStack extends Stack {
                 .build());
 
         ScalableTaskCount scalableTaskCount = serviceLogEventsProduct.getService().autoScaleTaskCount(EnableScalingProps.builder()
-                .minCapacity(2)
-                .maxCapacity(4)
+                .minCapacity(1)
+                .maxCapacity(2)
                 .build());
 
         scalableTaskCount.scaleOnCpuUtilization("LogEventsProductAutoScaling", CpuUtilizationScalingProps.builder()

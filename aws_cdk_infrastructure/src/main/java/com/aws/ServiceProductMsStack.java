@@ -35,12 +35,12 @@ public class ServiceProductMsStack extends Stack {
                 .cluster(cluster)
                 .cpu(256)
                 .memoryLimitMiB(512)
-                .desiredCount(2)
+                .desiredCount(1)
                 .listenerPort(8080)
                 .taskImageOptions(
                         ApplicationLoadBalancedTaskImageOptions.builder()
                                 .containerName("product-ms")
-                                .image(ContainerImage.fromRegistry("pedroulhoa/product-ms:0.0.4-SNAPSHOT"))
+                                .image(ContainerImage.fromRegistry("pedroulhoa/product-ms:0.0.5-SNAPSHOT"))
                                 .containerPort(8080)
                                 .logDriver(LogDriver.awsLogs(AwsLogDriverProps.builder()
                                         .logGroup(LogGroup.Builder.create(this, "ServiceProductMsLogGroup")
@@ -61,8 +61,8 @@ public class ServiceProductMsStack extends Stack {
                 .build());
 
         ScalableTaskCount scalableTaskCount = serviceProductMs.getService().autoScaleTaskCount(EnableScalingProps.builder()
-                .minCapacity(2)
-                .maxCapacity(4)
+                .minCapacity(1)
+                .maxCapacity(2)
                 .build());
 
         scalableTaskCount.scaleOnCpuUtilization("ServiceProductMsAutoScaling", CpuUtilizationScalingProps.builder()
