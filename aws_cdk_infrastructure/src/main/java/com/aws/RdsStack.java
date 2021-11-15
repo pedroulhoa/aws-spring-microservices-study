@@ -7,13 +7,13 @@ import software.amazon.awscdk.services.rds.*;
 import java.util.Collections;
 
 
-public class RdsCdkStack extends Stack {
+public class RdsStack extends Stack {
 
-    public RdsCdkStack(final Construct scope, final String id, final Vpc vpc) {
+    public RdsStack(final Construct scope, final String id, final Vpc vpc) {
         this(scope, id, null, vpc);
     }
 
-    public RdsCdkStack(final Construct scope, final String id, final StackProps props, final Vpc vpc) {
+    public RdsStack(final Construct scope, final String id, final StackProps props, final Vpc vpc) {
         super(scope, id, props);
 
         CfnParameter databasePassword = CfnParameter.Builder.create(this, "databasePassword")

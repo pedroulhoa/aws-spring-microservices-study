@@ -12,12 +12,15 @@ public class AwsCdkApp {
         ClusterStack clusterStack = new ClusterStack(app, "Cluster", vpcStack.getVpc());
         clusterStack.addDependency(vpcStack);
 
-        RdsCdkStack rdsCdkStack = new RdsCdkStack(app, "Rds", vpcStack.getVpc());
+        RdsStack rdsCdkStack = new RdsStack(app, "Rds", vpcStack.getVpc());
         rdsCdkStack.addDependency(vpcStack);
 
-        ServiceProductMsStack serviceProductMsStack = new ServiceProductMsStack(app, "ServiceProductMs", clusterStack.getCluster());
+        SnsStack snsStack = new SnsStack(app, "Sns");
+
+        ServiceProductMsStack serviceProductMsStack = new ServiceProductMsStack(app, "ServiceProductMs", clusterStack.getCluster(), snsStack.getProductEventsTopic());
         serviceProductMsStack.addDependency(clusterStack);
         serviceProductMsStack.addDependency(rdsCdkStack);
+        serviceProductMsStack.addDependency(snsStack);
 
         app.synth();
     }
