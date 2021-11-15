@@ -1,6 +1,7 @@
 package com.aws.productapi.service;
 
 import com.amazonaws.services.sns.AmazonSNS;
+import com.amazonaws.services.sns.model.PublishResult;
 import com.amazonaws.services.sns.model.Topic;
 import com.aws.productapi.dto.event.EventData;
 import com.aws.productapi.dto.event.ProductEvent;
@@ -37,7 +38,14 @@ public class ProductPublisher {
             EventData eventData = new EventData();
             eventData.setEventType(eventType);
             eventData.setData(objectMapper.writeValueAsString(productEvent));
-            snsClient.publish(productEventsTopic.getTopicArn(), objectMapper.writeValueAsString(eventData));
+
+            PublishResult publishResult = snsClient
+                    .publish(productEventsTopic.getTopicArn(), objectMapper.writeValueAsString(eventData));
+
+            LOG.info("Product event received - Event: {} - ProductId: {} - MessageId: {}",
+                    eventData.getEventType(),
+                    productEvent.getProductId(),
+                    publishResult.getMessageId());
         } catch (JsonProcessingException e) {
             LOG.error("Failed to create product event message");
         }
