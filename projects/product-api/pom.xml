@@ -12,7 +12,7 @@
 
     <groupId>com.aws</groupId>
     <artifactId>product-api</artifactId>
-    <version>0.0.5-SNAPSHOT</version>
+    <version>0.0.6-SNAPSHOT</version>
     <name>product-api</name>
     <description>product-api</description>
 
