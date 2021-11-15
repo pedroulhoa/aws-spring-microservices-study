@@ -24,7 +24,7 @@ public class AwsCdkApp {
 
         DdbStack ddbStack = new DdbStack(app, "Ddb");
 
-        ServiceLogEventsProductStack serviceLogEventsProductStack = new ServiceLogEventsProductStack(app, "ServiceLogEventsProduct", clusterStack.getCluster(), snsStack.getProductEventsTopic());
+        ServiceLogEventsProductStack serviceLogEventsProductStack = new ServiceLogEventsProductStack(app, "ServiceLogEventsProduct", clusterStack.getCluster(), snsStack.getProductEventsTopic(), ddbStack.getProductEventsDdb());
         serviceLogEventsProductStack.addDependency(clusterStack);
         serviceLogEventsProductStack.addDependency(snsStack);
         serviceLogEventsProductStack.addDependency(ddbStack);

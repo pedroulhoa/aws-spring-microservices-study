@@ -2,6 +2,7 @@ package com.aws;
 
 import software.amazon.awscdk.core.*;
 import software.amazon.awscdk.services.applicationautoscaling.EnableScalingProps;
+import software.amazon.awscdk.services.dynamodb.Table;
 import software.amazon.awscdk.services.ecs.*;
 import software.amazon.awscdk.services.ecs.patterns.ApplicationLoadBalancedFargateService;
 import software.amazon.awscdk.services.ecs.patterns.ApplicationLoadBalancedTaskImageOptions;
@@ -16,11 +17,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ServiceLogEventsProductStack extends Stack {
-    public ServiceLogEventsProductStack(final Construct scope, final String id, Cluster cluster, SnsTopic productEventsTopic) {
-        this(scope, id, null, cluster, productEventsTopic);
+    public ServiceLogEventsProductStack(final Construct scope, final String id, Cluster cluster, SnsTopic productEventsTopic, Table productEventsDdb) {
+        this(scope, id, null, cluster, productEventsTopic, productEventsDdb);
     }
 
-    public ServiceLogEventsProductStack(final Construct scope, final String id, final StackProps props, Cluster cluster, SnsTopic productEventsTopic) {
+    public ServiceLogEventsProductStack(final Construct scope, final String id, final StackProps props, Cluster cluster, SnsTopic productEventsTopic, Table productEventsDdb) {
         super(scope, id, props);
 
         Queue productEventsDlq = Queue.Builder.create(this, "ProductEventsDlq")
@@ -55,7 +56,7 @@ public class ServiceLogEventsProductStack extends Stack {
                 .taskImageOptions(
                         ApplicationLoadBalancedTaskImageOptions.builder()
                                 .containerName("log-events-product")
-                                .image(ContainerImage.fromRegistry("pedroulhoa/log-events-product:0.0.3-SNAPSHOT"))
+                                .image(ContainerImage.fromRegistry("pedroulhoa/log-events-product:0.0.4-SNAPSHOT"))
                                 .containerPort(9090)
                                 .logDriver(LogDriver.awsLogs(AwsLogDriverProps.builder()
                                         .logGroup(LogGroup.Builder.create(this, "LogEventsProductLogGroup")
@@ -87,5 +88,6 @@ public class ServiceLogEventsProductStack extends Stack {
                 .build());
 
         productEventsQueue.grantConsumeMessages(serviceLogEventsProduct.getTaskDefinition().getTaskRole());
+        productEventsDdb.grantReadWriteData(serviceLogEventsProduct.getTaskDefinition().getTaskRole());
     }
 }
