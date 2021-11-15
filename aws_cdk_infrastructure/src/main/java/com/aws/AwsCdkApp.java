@@ -22,8 +22,9 @@ public class AwsCdkApp {
         serviceProductMsStack.addDependency(rdsCdkStack);
         serviceProductMsStack.addDependency(snsStack);
 
-        ServiceLogEventsProductStack serviceLogEventsProductStack = new ServiceLogEventsProductStack(app, "ServiceLogEventsProduct", clusterStack.getCluster());
+        ServiceLogEventsProductStack serviceLogEventsProductStack = new ServiceLogEventsProductStack(app, "ServiceLogEventsProduct", clusterStack.getCluster(), snsStack.getProductEventsTopic());
         serviceLogEventsProductStack.addDependency(clusterStack);
+        serviceLogEventsProductStack.addDependency(snsStack);
 
         app.synth();
     }
