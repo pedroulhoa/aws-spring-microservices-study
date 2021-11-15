@@ -1,11 +1,11 @@
 package com.aws.productapi.controller;
 
+import com.aws.productapi.dto.event.enums.EventType;
 import com.aws.productapi.dto.request.ProductRequest;
 import com.aws.productapi.dto.response.ProductResponse;
 import com.aws.productapi.entity.Product;
 import com.aws.productapi.repository.ProductRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.aws.productapi.service.ProductPublisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,13 +18,13 @@ import java.util.Optional;
 @RequestMapping("/api/products")
 public class ProductController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ProductController.class);
-
     private final ProductRepository productRepository;
+    private final ProductPublisher productPublisher;
 
     @Autowired
-    public ProductController(ProductRepository productRepository) {
+    public ProductController(ProductRepository productRepository, ProductPublisher productPublisher) {
         this.productRepository = productRepository;
+        this.productPublisher = productPublisher;
     }
 
     @GetMapping()
@@ -42,6 +42,7 @@ public class ProductController {
     @PostMapping
     public ResponseEntity<ProductResponse> save(@Valid @RequestBody ProductRequest request) {
         Product productCreate = productRepository.save(new Product(request));
+        productPublisher.publishProductEvent(productCreate, EventType.PRODUCT_CREATED, "user_created");
         return ResponseEntity.status(HttpStatus.CREATED).body(new ProductResponse(productCreate));
     }
 
@@ -52,6 +53,7 @@ public class ProductController {
         if (productUpdate.isPresent()) {
             Product product = new Product(id, request);
             productRepository.save(product);
+            productPublisher.publishProductEvent(product, EventType.PRODUCT_UPDATE, "user_update");
             return ResponseEntity.ok(new ProductResponse(product));
         } else {
             return ResponseEntity.notFound().build();
@@ -64,6 +66,7 @@ public class ProductController {
 
         if (productDelete.isPresent()) {
             productRepository.deleteById(id);
+            productPublisher.publishProductEvent(productDelete.get(), EventType.PRODUCT_DELETED, "user_delete");
             ResponseEntity.noContent().build();
         } else {
             ResponseEntity.notFound().build();

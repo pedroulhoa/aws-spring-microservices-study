@@ -9,3 +9,8 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+
+aws:
+  region: us-east-1
+  sns-topic:
+    product-events-arn: product-events
