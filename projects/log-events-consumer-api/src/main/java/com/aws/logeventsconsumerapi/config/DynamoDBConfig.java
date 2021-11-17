@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Profile;
 
 @Configuration
 @EnableDynamoDBRepositories(basePackageClasses = ProductEventLogRepository.class)
+@Profile("!local")
 public class DynamoDBConfig {
 
     @Value("${aws.region}")

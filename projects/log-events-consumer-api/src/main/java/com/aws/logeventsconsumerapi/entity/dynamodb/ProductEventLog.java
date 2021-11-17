@@ -1,4 +1,4 @@
-package com.aws.logeventsconsumerapi.dto.event.dynamodb;
+package com.aws.logeventsconsumerapi.entity.dynamodb;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;

@@ -1,7 +1,7 @@
 package com.aws.logeventsconsumerapi.repository;
 
-import com.aws.logeventsconsumerapi.dto.event.dynamodb.ProductEventKey;
-import com.aws.logeventsconsumerapi.dto.event.dynamodb.ProductEventLog;
+import com.aws.logeventsconsumerapi.entity.dynamodb.ProductEventKey;
+import com.aws.logeventsconsumerapi.entity.dynamodb.ProductEventLog;
 import org.socialsignin.spring.data.dynamodb.repository.EnableScan;
 import org.springframework.data.repository.CrudRepository;
 

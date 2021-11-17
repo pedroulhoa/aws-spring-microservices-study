@@ -3,7 +3,7 @@ package com.aws.logeventsconsumerapi.service;
 import com.aws.logeventsconsumerapi.dto.event.EventData;
 import com.aws.logeventsconsumerapi.dto.event.ProductEvent;
 import com.aws.logeventsconsumerapi.dto.event.SnsMessage;
-import com.aws.logeventsconsumerapi.dto.event.dynamodb.ProductEventLog;
+import com.aws.logeventsconsumerapi.entity.dynamodb.ProductEventLog;
 import com.aws.logeventsconsumerapi.repository.ProductEventLogRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
