@@ -4,7 +4,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import com.aws.logeventsconsumerapi.enums.EventType;
 import org.springframework.data.annotation.Id;
 
-@DynamoDBTable(tableName = "product-events")
+@DynamoDBTable(tableName = "products-events")
 public class ProductEventLog {
 
     @Id
@@ -17,8 +17,8 @@ public class ProductEventLog {
     @DynamoDBAttribute(attributeName = "productId")
     private long productId;
 
-    @DynamoDBAttribute(attributeName = "messageId")
-    private String messageId;
+//    @DynamoDBAttribute(attributeName = "messageId")
+//    private String messageId;
 
     @DynamoDBAttribute(attributeName = "username")
     private String username;
@@ -98,11 +98,11 @@ public class ProductEventLog {
         this.ttl = ttl;
     }
 
-    public String getMessageId() {
-        return messageId;
-    }
-
-    public void setMessageId(String messageId) {
-        this.messageId = messageId;
-    }
+//    public String getMessageId() {
+//        return messageId;
+//    }
+//
+//    public void setMessageId(String messageId) {
+//        this.messageId = messageId;
+//    }
 }
