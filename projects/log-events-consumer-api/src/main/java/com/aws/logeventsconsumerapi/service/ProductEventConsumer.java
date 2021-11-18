@@ -65,7 +65,7 @@ public class ProductEventConsumer {
         productEventLog.setUsername(productEvent.getUsername());
         productEventLog.setTimestamp(timestamp);
         productEventLog.setTtl(Instant.now().plus(Duration.ofMinutes(10)).getEpochSecond());
-//        productEventLog.setMessageId(messageId);
+        productEventLog.setMessageId(messageId);
         return productEventLog;
     }
 }
