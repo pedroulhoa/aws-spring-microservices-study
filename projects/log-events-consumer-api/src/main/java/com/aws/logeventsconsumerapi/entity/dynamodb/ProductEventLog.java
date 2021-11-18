@@ -1,9 +1,6 @@
 package com.aws.logeventsconsumerapi.entity.dynamodb;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConvertedEnum;
+import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import com.aws.logeventsconsumerapi.enums.EventType;
 import org.springframework.data.annotation.Id;
 
@@ -22,7 +19,6 @@ public class ProductEventLog {
 
     @DynamoDBAttribute(attributeName = "messageId")
     private String messageId;
-
 
     @DynamoDBAttribute(attributeName = "username")
     private String username;
@@ -49,7 +45,7 @@ public class ProductEventLog {
         this.productEventKey.setPk(pk);
     }
 
-    @DynamoDBHashKey(attributeName = "sk")
+    @DynamoDBRangeKey(attributeName = "sk")
     public String getSk() {
         return this.productEventKey != null ? this.productEventKey.getSk() : null;
     }

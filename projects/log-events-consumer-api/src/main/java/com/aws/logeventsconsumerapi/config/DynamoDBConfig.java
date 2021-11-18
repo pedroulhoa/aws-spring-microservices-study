@@ -1,6 +1,5 @@
 package com.aws.logeventsconsumerapi.config;
 
-import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
@@ -13,6 +12,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
+import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 
 @Configuration
 @EnableDynamoDBRepositories(basePackageClasses = ProductEventLogRepository.class)

@@ -5,11 +5,10 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
 
 public class ProductEventKey {
 
+    public ProductEventKey() {}
+
     private String pk;
     private String sk;
-
-    public ProductEventKey() {
-    }
 
     @DynamoDBHashKey(attributeName = "pk")
     public String getPk() {
@@ -28,4 +27,5 @@ public class ProductEventKey {
     public void setSk(String sk) {
         this.sk = sk;
     }
+
 }
