@@ -14,3 +14,10 @@ aws:
   region: us-east-1
   sns-topic:
     product-events-arn: product-events
+  s3:
+    bucket:
+      invoice-name: pcs-invoice
+  sqs:
+    queue:
+      invoice:
+        events-name: s3-invoice-events

@@ -21,6 +21,9 @@
         <jib-version>3.1.4</jib-version>
         <sns.version>1.12.110</sns.version>
         <sqs.version>1.12.110</sqs.version>
+        <aws-java-sdk-s3.version>1.12.112</aws-java-sdk-s3.version>
+        <spring-jms.version>5.3.13</spring-jms.version>
+        <amazon-sqs-java-messaging-lib.version>1.0.8</amazon-sqs-java-messaging-lib.version>
     </properties>
 
     <dependencies>
@@ -59,6 +62,24 @@
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk-sqs</artifactId>
             <version>${sqs.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-s3</artifactId>
+            <version>${aws-java-sdk-s3.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jms</artifactId>
+            <version>${spring-jms.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>amazon-sqs-java-messaging-lib</artifactId>
+            <version>${amazon-sqs-java-messaging-lib.version}</version>
         </dependency>
 
         <dependency>
