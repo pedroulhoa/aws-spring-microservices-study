@@ -17,10 +17,13 @@ public class AwsCdkApp {
 
         SnsStack snsStack = new SnsStack(app, "Sns");
 
-        ServiceProductMsStack serviceProductMsStack = new ServiceProductMsStack(app, "ServiceProductMs", clusterStack.getCluster(), snsStack.getProductEventsTopic());
+        InvoiceAppStack invoiceAppStack = new InvoiceAppStack(app, "InvoiceApp");
+
+        ServiceProductMsStack serviceProductMsStack = new ServiceProductMsStack(app, "ServiceProductMs", clusterStack.getCluster(), snsStack.getProductEventsTopic(), invoiceAppStack.getBucket(), invoiceAppStack.getS3InvoiceQueue());
         serviceProductMsStack.addDependency(clusterStack);
         serviceProductMsStack.addDependency(rdsCdkStack);
         serviceProductMsStack.addDependency(snsStack);
+        serviceProductMsStack.addDependency(invoiceAppStack);
 
         DdbStack ddbStack = new DdbStack(app, "Ddb");
 

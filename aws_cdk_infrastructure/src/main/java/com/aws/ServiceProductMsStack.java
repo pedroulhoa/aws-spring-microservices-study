@@ -8,17 +8,19 @@ import software.amazon.awscdk.services.ecs.patterns.ApplicationLoadBalancedTaskI
 import software.amazon.awscdk.services.elasticloadbalancingv2.HealthCheck;
 import software.amazon.awscdk.services.events.targets.SnsTopic;
 import software.amazon.awscdk.services.logs.LogGroup;
+import software.amazon.awscdk.services.s3.Bucket;
+import software.amazon.awscdk.services.sqs.Queue;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class ServiceProductMsStack extends Stack {
 
-    public ServiceProductMsStack(final Construct scope, final String id, Cluster cluster, SnsTopic productEventsTopic) {
-        this(scope, id, null, cluster, productEventsTopic);
+    public ServiceProductMsStack(final Construct scope, final String id, Cluster cluster, SnsTopic productEventsTopic, Bucket invoiceBucket, Queue invoiceQueue) {
+        this(scope, id, null, cluster, productEventsTopic, invoiceBucket, invoiceQueue);
     }
 
-    public ServiceProductMsStack(final Construct scope, final String id, final StackProps props, Cluster cluster, SnsTopic productEventsTopic) {
+    public ServiceProductMsStack(final Construct scope, final String id, final StackProps props, Cluster cluster, SnsTopic productEventsTopic, Bucket invoiceBucket, Queue invoiceQueue) {
         super(scope, id, props);
 
         Map<String, String> envVariables = new HashMap<>();
@@ -28,6 +30,8 @@ public class ServiceProductMsStack extends Stack {
         envVariables.put("SPRING_DATASOURCE_PASSWORD", Fn.importValue("rds-password"));
         envVariables.put("AWS_REGION", "us-east-1");
         envVariables.put("AWS_SNS-TOPIC_PRODUCT-EVENTS-ARN", productEventsTopic.getTopic().getTopicArn());
+        envVariables.put("AWS_S3_BUCKET_INVOICE-NAME", invoiceBucket.getBucketName());
+        envVariables.put("AWS_SQS_QUEUE_INVOICE_EVENTS-NAME", invoiceQueue.getQueueName());
 
         ApplicationLoadBalancedFargateService serviceProductMs = ApplicationLoadBalancedFargateService.Builder
                 .create(this, "ALB01")
@@ -72,5 +76,8 @@ public class ServiceProductMsStack extends Stack {
                 .build());
 
         productEventsTopic.getTopic().grantPublish(serviceProductMs.getTaskDefinition().getTaskRole());
+
+        invoiceQueue.grantConsumeMessages(serviceProductMs.getTaskDefinition().getTaskRole());
+        invoiceBucket.grantReadWrite(serviceProductMs.getTaskDefinition().getTaskRole());
     }
 }
