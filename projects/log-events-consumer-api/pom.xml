@@ -24,6 +24,7 @@
         <amazon-sqs-java-messaging-lib.version>1.0.8</amazon-sqs-java-messaging-lib.version>
         <aws-java-sdk-dynamodb.version>1.12.110</aws-java-sdk-dynamodb.version>
         <spring-data-dynamodb.version>5.2.5</spring-data-dynamodb.version>
+        <springfox-boot-starter.version>3.0.0</springfox-boot-starter.version>
     </properties>
 
     <dependencies>
@@ -65,6 +66,12 @@
             <groupId>io.github.boostchicken</groupId>
             <artifactId>spring-data-dynamodb</artifactId>
             <version>${spring-data-dynamodb.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-boot-starter</artifactId>
+            <version>${springfox-boot-starter.version}</version>
         </dependency>
 
         <dependency>

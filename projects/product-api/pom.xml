@@ -24,6 +24,7 @@
         <aws-java-sdk-s3.version>1.12.112</aws-java-sdk-s3.version>
         <spring-jms.version>5.3.13</spring-jms.version>
         <amazon-sqs-java-messaging-lib.version>1.0.8</amazon-sqs-java-messaging-lib.version>
+        <springfox-boot-starter.version>3.0.0</springfox-boot-starter.version>
     </properties>
 
     <dependencies>
@@ -80,6 +81,12 @@
             <groupId>com.amazonaws</groupId>
             <artifactId>amazon-sqs-java-messaging-lib</artifactId>
             <version>${amazon-sqs-java-messaging-lib.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-boot-starter</artifactId>
+            <version>${springfox-boot-starter.version}</version>
         </dependency>
 
         <dependency>
