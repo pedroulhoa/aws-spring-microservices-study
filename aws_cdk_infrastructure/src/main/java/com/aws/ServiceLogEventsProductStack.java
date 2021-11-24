@@ -56,7 +56,7 @@ public class ServiceLogEventsProductStack extends Stack {
                 .taskImageOptions(
                         ApplicationLoadBalancedTaskImageOptions.builder()
                                 .containerName("log-events-product")
-                                .image(ContainerImage.fromRegistry("pedroulhoa/log-events-product:1.0.0-SNAPSHOT"))
+                                .image(ContainerImage.fromRegistry("image-name"))
                                 .containerPort(9090)
                                 .logDriver(LogDriver.awsLogs(AwsLogDriverProps.builder()
                                         .logGroup(LogGroup.Builder.create(this, "LogEventsProductLogGroup")

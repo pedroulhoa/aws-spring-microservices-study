@@ -44,7 +44,7 @@ public class ServiceProductMsStack extends Stack {
                 .taskImageOptions(
                         ApplicationLoadBalancedTaskImageOptions.builder()
                                 .containerName("product-ms")
-                                .image(ContainerImage.fromRegistry("pedroulhoa/product-ms:1.0.0-SNAPSHOT"))
+                                .image(ContainerImage.fromRegistry("image-name"))
                                 .containerPort(8080)
                                 .logDriver(LogDriver.awsLogs(AwsLogDriverProps.builder()
                                         .logGroup(LogGroup.Builder.create(this, "ServiceProductMsLogGroup")
