@@ -9,11 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/events")
 public class ProductEventLogController {
 
     private final ProductEventLogRepository productEventLogRepository;
@@ -23,27 +22,27 @@ public class ProductEventLogController {
         this.productEventLogRepository = productEventLogRepository;
     }
 
-    @GetMapping("/events")
+    @GetMapping()
     public List<ProductEventLogDto> getAllEvents() {
         return StreamSupport.stream(productEventLogRepository.findAll().spliterator(), false)
                 .map(ProductEventLogDto::new)
-                .collect(Collectors.toList());
+                .toList();
     }
 
-    @GetMapping("/events/{code}")
+    @GetMapping("/{code}")
     public List<ProductEventLogDto> findByCode(@PathVariable String code) {
         return productEventLogRepository.findAllByPk(code)
                 .stream()
                 .map(ProductEventLogDto::new)
-                .collect(Collectors.toList());
+                .toList();
     }
 
-    @GetMapping("/events/{code}/{event}")
+    @GetMapping("/{code}/{event}")
     public List<ProductEventLogDto> findByCodeAndEventType(@PathVariable String code,
                                                            @PathVariable String event) {
         return productEventLogRepository.findAllByPkAndSkStartsWith(code, event)
                 .stream()
                 .map(ProductEventLogDto::new)
-                .collect(Collectors.toList());
+                .toList();
     }
 }
