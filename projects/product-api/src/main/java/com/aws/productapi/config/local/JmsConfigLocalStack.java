@@ -1,4 +1,4 @@
-package com.aws.productapi.config;
+package com.aws.productapi.config.local;
 
 import com.amazon.sqs.javamessaging.ProviderConfiguration;
 import com.amazon.sqs.javamessaging.SQSConnectionFactory;
@@ -6,6 +6,7 @@ import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.sqs.AmazonSQSClient;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -20,13 +21,16 @@ import javax.jms.Session;
 @Profile("local")
 public class JmsConfigLocalStack {
 
+    @Value("${local-stack.url}")
+    private String localstackUrl;
+
     @Bean
     public DefaultJmsListenerContainerFactory jmsListenerContainerFactory() {
         SQSConnectionFactory sqsConnectionFactory = new SQSConnectionFactory(
                 new ProviderConfiguration(),
                 AmazonSQSClient.builder()
                         .withEndpointConfiguration(
-                                new AwsClientBuilder.EndpointConfiguration("http://localhost:4566",
+                                new AwsClientBuilder.EndpointConfiguration(localstackUrl,
                                         Regions.US_EAST_1.getName()))
                         .withCredentials(new DefaultAWSCredentialsProviderChain())
                         .build());

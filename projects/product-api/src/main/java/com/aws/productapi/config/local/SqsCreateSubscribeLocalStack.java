@@ -1,4 +1,4 @@
-package com.aws.productapi.config;
+package com.aws.productapi.config.local;
 
 import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.client.builder.AwsClientBuilder;
@@ -10,6 +10,7 @@ import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.AmazonSQSClient;
 import com.amazonaws.services.sqs.model.CreateQueueRequest;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
@@ -17,10 +18,12 @@ import org.springframework.context.annotation.Profile;
 @Profile("local")
 public class SqsCreateSubscribeLocalStack {
 
-    public SqsCreateSubscribeLocalStack(AmazonSNS snsClient, @Qualifier("productEventsTopic") Topic productEventsTopic) {
+    public SqsCreateSubscribeLocalStack(AmazonSNS snsClient,
+                                        @Qualifier("productEventsTopic") Topic productEventsTopic,
+                                        @Value("${local-stack.url}") String localstackUrl) {
         AmazonSQS sqsClient = AmazonSQSClient.builder()
                 .withEndpointConfiguration(
-                        new AwsClientBuilder.EndpointConfiguration("http://localhost:4566",
+                        new AwsClientBuilder.EndpointConfiguration(localstackUrl,
                                 Regions.US_EAST_1.getName()))
                 .withCredentials(new DefaultAWSCredentialsProviderChain())
                 .build();
@@ -30,6 +33,5 @@ public class SqsCreateSubscribeLocalStack {
 
         Topics.subscribeQueue(snsClient, sqsClient, productEventsTopic.getTopicArn(), productEventsQueueUrl);
     }
-
 
 }

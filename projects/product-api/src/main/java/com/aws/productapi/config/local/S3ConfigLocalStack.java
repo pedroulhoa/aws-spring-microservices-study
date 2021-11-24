@@ -1,4 +1,4 @@
-package com.aws.productapi.config;
+package com.aws.productapi.config.local;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
@@ -14,6 +14,7 @@ import com.amazonaws.services.sns.util.Topics;
 import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.AmazonSQSClient;
 import com.amazonaws.services.sqs.model.CreateQueueRequest;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -25,23 +26,26 @@ import com.amazonaws.services.s3.AmazonS3;
 @Profile("local")
 public class S3ConfigLocalStack {
 
-    private static final String BUCKET_NAME = "pcs-invoice";
+    private final String localstackUrl;
+    private final String bucketName;
+    private final String queueInvoiceName;
 
     private AmazonS3 amazonS3;
 
-    public S3ConfigLocalStack() {
+    public S3ConfigLocalStack(@Value("${local-stack.url}") String localstackUrl,
+                              @Value("${aws.s3.bucket.invoice-name}") String bucketName,
+                              @Value("${aws.sqs.queue.invoice.events-name}") String queueInvoiceName) {
+
+        this.localstackUrl = localstackUrl;
+        this.bucketName = bucketName;
+        this.queueInvoiceName = queueInvoiceName;
+
         amazonS3 = getAmazonS3();
-
         createBucket();
-
         AmazonSNS snsClient = getAmazonSNS();
-
         String s3InvoiceEventsTopicArn = createTopic(snsClient);
-
         AmazonSQS sqsClient = getAmazonSQS();
-
         createQueue(snsClient, s3InvoiceEventsTopicArn, sqsClient);
-
         configureBucket(s3InvoiceEventsTopicArn);
     }
 
@@ -50,26 +54,26 @@ public class S3ConfigLocalStack {
         topicConfiguration.setTopicARN(s3InvoiceEventsTopicArn);
         topicConfiguration.addEvent(S3Event.ObjectCreatedByPut);
 
-        amazonS3.setBucketNotificationConfiguration(BUCKET_NAME,
+        amazonS3.setBucketNotificationConfiguration(bucketName,
                 new BucketNotificationConfiguration().addConfiguration("putObject", topicConfiguration));
     }
 
     private void createQueue(AmazonSNS snsClient, String s3InvoiceEventsTopicArn, AmazonSQS sqsClient) {
         String s3InvoiceQueueUrl = sqsClient.createQueue(
-                new CreateQueueRequest("s3-invoice-events")).getQueueUrl();
+                new CreateQueueRequest(queueInvoiceName)).getQueueUrl();
 
         Topics.subscribeQueue(snsClient, sqsClient, s3InvoiceEventsTopicArn, s3InvoiceQueueUrl);
     }
 
     private String createTopic(AmazonSNS snsClient) {
-        CreateTopicRequest createTopicRequest = new CreateTopicRequest("s3-invoice-events");
+        CreateTopicRequest createTopicRequest = new CreateTopicRequest(queueInvoiceName);
         return snsClient.createTopic(createTopicRequest).getTopicArn();
     }
 
     private AmazonSQS getAmazonSQS() {
         return AmazonSQSClient.builder()
                 .withEndpointConfiguration(
-                        new AwsClientBuilder.EndpointConfiguration("http://localhost:4566",
+                        new AwsClientBuilder.EndpointConfiguration(localstackUrl,
                                 Regions.US_EAST_1.getName()))
                 .withCredentials(new DefaultAWSCredentialsProviderChain())
                 .build();
@@ -78,7 +82,7 @@ public class S3ConfigLocalStack {
     private AmazonSNS getAmazonSNS() {
         return AmazonSNSClient.builder()
                 .withEndpointConfiguration(
-                        new AwsClientBuilder.EndpointConfiguration("http://localhost:4566",
+                        new AwsClientBuilder.EndpointConfiguration(localstackUrl,
                                 Regions.US_EAST_1.getName()))
                 .withCredentials(new DefaultAWSCredentialsProviderChain())
                 .build();
@@ -89,7 +93,7 @@ public class S3ConfigLocalStack {
 
         this.amazonS3 = AmazonS3Client.builder()
                 .withEndpointConfiguration(
-                        new AwsClientBuilder.EndpointConfiguration("http://localhost:4566",
+                        new AwsClientBuilder.EndpointConfiguration(localstackUrl,
                                 Regions.US_EAST_1.getName()))
                 .withCredentials(new AWSStaticCredentialsProvider(credentials))
                 .enablePathStyleAccess()
@@ -98,7 +102,7 @@ public class S3ConfigLocalStack {
     }
 
     private void createBucket() {
-        amazonS3.createBucket(BUCKET_NAME);
+        amazonS3.createBucket(bucketName);
     }
 
     @Bean

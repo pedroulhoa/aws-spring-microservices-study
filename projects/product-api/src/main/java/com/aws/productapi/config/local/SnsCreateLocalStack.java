@@ -1,4 +1,4 @@
-package com.aws.productapi.config;
+package com.aws.productapi.config.local;
 
 import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.client.builder.AwsClientBuilder;
@@ -9,6 +9,7 @@ import com.amazonaws.services.sns.model.CreateTopicRequest;
 import com.amazonaws.services.sns.model.Topic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -22,14 +23,16 @@ public class SnsCreateLocalStack {
     private final String productEventsTopic;
     private final AmazonSNS snsClient;
 
-    public SnsCreateLocalStack() {
+    public SnsCreateLocalStack(@Value("${local-stack.url}") String localstackUrl,
+                               @Value("${aws.sns-topic.product-events-arn}") String topicArnName) {
+
         this.snsClient = AmazonSNSClient.builder()
                 .withEndpointConfiguration(new AwsClientBuilder
-                        .EndpointConfiguration("http://localhost:4566", Regions.US_EAST_1.getName()))
+                        .EndpointConfiguration(localstackUrl, Regions.US_EAST_1.getName()))
                 .withCredentials(new DefaultAWSCredentialsProviderChain())
                 .build();
 
-        CreateTopicRequest createTopicRequest = new CreateTopicRequest("product-events");
+        CreateTopicRequest createTopicRequest = new CreateTopicRequest(topicArnName);
         this.productEventsTopic = this.snsClient.createTopic(createTopicRequest).getTopicArn();
 
         LOG.info("SNS topic ARN: {}", this.productEventsTopic);
@@ -44,5 +47,4 @@ public class SnsCreateLocalStack {
     public Topic snsProductEventsTopic() {
         return new Topic().withTopicArn(productEventsTopic);
     }
-
 }

@@ -21,3 +21,6 @@ aws:
     queue:
       invoice:
         events-name: s3-invoice-events
+
+local-stack:
+  url: http://localhost:4566
