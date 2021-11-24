@@ -17,6 +17,7 @@
     <description>product-api</description>
 
     <properties>
+        <jib-maven-plugin.image>docker.io/pedroulhoa/product-ms</jib-maven-plugin.image>
         <java.version>17</java.version>
         <jib-version>3.1.4</jib-version>
         <sns.version>1.12.110</sns.version>
@@ -122,7 +123,7 @@
                 <version>${jib-version}</version>
                 <configuration>
                     <to>
-                        <image>docker.io/pedroulhoa/product-ms:${project.version}</image>
+                        <image>${jib-maven-plugin.image}:${project.version}</image>
                     </to>
                     <from>
                         <image>openjdk:17</image>
