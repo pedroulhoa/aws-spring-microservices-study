@@ -53,7 +53,7 @@ public class DynamoDBConfigLocalStack {
         keySchema.add(new KeySchemaElement().withAttributeName("sk").withKeyType(KeyType.RANGE));
 
         CreateTableRequest request = new CreateTableRequest()
-                .withTableName("product-events")
+                .withTableName("products-events")
                 .withKeySchema(keySchema)
                 .withAttributeDefinitions(attributeDefinitions)
                 .withBillingMode(BillingMode.PAY_PER_REQUEST);
