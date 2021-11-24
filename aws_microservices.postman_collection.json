@@ -1,0 +1,293 @@
+{
+	"info": {
+		"_postman_id": "5421e3e3-d88c-4316-9036-27b1fe20d13c",
+		"name": "[Study] AWS microservices",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "product-api",
+			"item": [
+				{
+					"name": "product",
+					"item": [
+						{
+							"name": "GetAll",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{product-api-url}}/api/products",
+									"host": [
+										"{{product-api-url}}"
+									],
+									"path": [
+										"api",
+										"products"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"IPhone 13+\",\n    \"model\": \"I02\",\n    \"code\": \"CODE04\",\n    \"price\": 9000.50\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{product-api-url}}/api/products",
+									"host": [
+										"{{product-api-url}}"
+									],
+									"path": [
+										"api",
+										"products"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{product-api-url}}/api/products/1",
+									"host": [
+										"{{product-api-url}}"
+									],
+									"path": [
+										"api",
+										"products",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"IPhone 13+\",\n    \"model\": \"I02\",\n    \"code\": \"CODE04\",\n    \"price\": 8000.50\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{product-api-url}}/api/products/5",
+									"host": [
+										"{{product-api-url}}"
+									],
+									"path": [
+										"api",
+										"products",
+										"5"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{product-api-url}}/api/products/1",
+									"host": [
+										"{{product-api-url}}"
+									],
+									"path": [
+										"api",
+										"products",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get ByCode",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{product-api-url}}/api/products/bycode?code=CODE01",
+									"host": [
+										"{{product-api-url}}"
+									],
+									"path": [
+										"api",
+										"products",
+										"bycode"
+									],
+									"query": [
+										{
+											"key": "code",
+											"value": "CODE01"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "invoices",
+					"item": [
+						{
+							"name": "getAll",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{product-api-url}}/api/invoices",
+									"host": [
+										"{{product-api-url}}"
+									],
+									"path": [
+										"api",
+										"invoices"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get byCustomerName",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{product-api-url}}/api/invoices/bycustomername?customerName=user-name",
+									"host": [
+										"{{product-api-url}}"
+									],
+									"path": [
+										"api",
+										"invoices",
+										"bycustomername"
+									],
+									"query": [
+										{
+											"key": "customerName",
+											"value": "user-name"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create InvoiceURL",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{product-api-url}}/api/invoices/",
+									"host": [
+										"{{product-api-url}}"
+									],
+									"path": [
+										"api",
+										"invoices",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "log-events-consumer-api",
+			"item": [
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{events-api-url}}/api/events",
+							"host": [
+								"{{events-api-url}}"
+							],
+							"path": [
+								"api",
+								"events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get Bycode",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{events-api-url}}/api/events/CODE04",
+							"host": [
+								"{{events-api-url}}"
+							],
+							"path": [
+								"api",
+								"events",
+								"CODE04"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get BycodeAndEventType",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{events-api-url}}/api/events/CODE04/PRODUCT_CREATED",
+							"host": [
+								"{{events-api-url}}"
+							],
+							"path": [
+								"api",
+								"events",
+								"CODE04",
+								"PRODUCT_CREATED"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
