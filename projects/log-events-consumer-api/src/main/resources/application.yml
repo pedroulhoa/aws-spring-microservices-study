@@ -6,3 +6,6 @@ aws:
   sqs:
     queue:
       product-events-name: product-events
+
+local-stack:
+  url: http://localhost:4566
