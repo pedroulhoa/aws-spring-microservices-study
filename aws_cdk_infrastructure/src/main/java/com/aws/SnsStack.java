@@ -24,7 +24,7 @@ public class SnsStack extends Stack {
                         .build())
                 .build();
 
-        productEventsTopic.getTopic().addSubscription(EmailSubscription.Builder.create("pedroulhoa@live.com")
+        productEventsTopic.getTopic().addSubscription(EmailSubscription.Builder.create("testemail@testemail.com")
                 .json(true)
                 .build());
 
