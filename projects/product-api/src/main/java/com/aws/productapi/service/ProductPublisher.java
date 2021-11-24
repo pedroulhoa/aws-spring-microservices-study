@@ -25,7 +25,9 @@ public class ProductPublisher {
     private final ObjectMapper objectMapper;
 
     @Autowired
-    public ProductPublisher(AmazonSNS snsClient, @Qualifier("productEventsTopic") Topic productEventsTopic, ObjectMapper objectMapper) {
+    public ProductPublisher(AmazonSNS snsClient,
+                            @Qualifier("productEventsTopic") Topic productEventsTopic,
+                            ObjectMapper objectMapper) {
         this.snsClient = snsClient;
         this.productEventsTopic = productEventsTopic;
         this.objectMapper = objectMapper;

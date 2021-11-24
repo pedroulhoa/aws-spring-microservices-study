@@ -18,7 +18,7 @@ import java.util.Date;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/invoices")
+@RequestMapping("/invoices")
 public class InvoiceController {
 
     @Value("${aws.s3.bucket.invoice-name}")

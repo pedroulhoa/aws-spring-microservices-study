@@ -47,12 +47,10 @@ public class InvoiceConsumer {
         processInvoiceNotification(s3EventNotification);
     }
 
-    private void processInvoiceNotification(S3EventNotification
-                                                    s3EventNotification) throws IOException {
+    private void processInvoiceNotification(S3EventNotification s3EventNotification) throws IOException {
         for (S3EventNotification.S3EventNotificationRecord
                 s3EventNotificationRecord : s3EventNotification.getRecords()) {
-            S3EventNotification.S3Entity s3Entity =
-                    s3EventNotificationRecord.getS3();
+            S3EventNotification.S3Entity s3Entity = s3EventNotificationRecord.getS3();
 
             String bucketName = s3Entity.getBucket().getName();
             String objectKey = s3Entity.getObject().getKey();
@@ -68,17 +66,18 @@ public class InvoiceConsumer {
         }
     }
 
-    private String downloadObject(String bucketName, String objectKey)
-            throws IOException {
+    private String downloadObject(String bucketName, String objectKey) throws IOException {
         S3Object s3Object = amazonS3.getObject(bucketName, objectKey);
 
         StringBuilder stringBuilder = new StringBuilder();
-        BufferedReader bufferedReader = new BufferedReader(
-                new InputStreamReader(s3Object.getObjectContent()));
-        String content = null;
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(s3Object.getObjectContent()));
+
+        String content;
+
         while ((content = bufferedReader.readLine()) != null) {
             stringBuilder.append(content);
         }
+
         return stringBuilder.toString();
     }
 }
