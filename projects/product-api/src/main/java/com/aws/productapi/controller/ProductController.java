@@ -6,6 +6,7 @@ import com.aws.productapi.dto.response.ProductResponse;
 import com.aws.productapi.entity.Product;
 import com.aws.productapi.repository.ProductRepository;
 import com.aws.productapi.service.ProductPublisher;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import javax.validation.Valid;
 import java.util.Optional;
 
 @RestController
+@Api(tags = "Products")
 @RequestMapping("/products")
 public class ProductController {
 

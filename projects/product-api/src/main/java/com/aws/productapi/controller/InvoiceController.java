@@ -6,6 +6,7 @@ import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import com.aws.productapi.entity.Invoice;
 import com.aws.productapi.entity.UrlResponse;
 import com.aws.productapi.repository.InvoiceRepository;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import java.util.Date;
 import java.util.UUID;
 
 @RestController
+@Api(tags = "Invoices")
 @RequestMapping("/invoices")
 public class InvoiceController {
 
