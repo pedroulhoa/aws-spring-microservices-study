@@ -16,7 +16,7 @@ Projeto realizado com base no curso [Criando microsserviços em Java com AWS ECS
 * jib (GoogleContainerTools)
 
 ### Arquitetura
-![Arquitetura](/home/pedroulhoa/development/backend/aws-spring-microservices-study/architecture.png)
+![Arquitetura](architecture.png)
 
 ### Execução
 
